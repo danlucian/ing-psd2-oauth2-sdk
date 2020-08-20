@@ -43,7 +43,7 @@ dependencies {
 
 ## Short introduction
 
-ING has 2 environments which you can use for the integration:
+ING has 2 environments which can be used for the integration:
 - Production
 - Sandbox
 
