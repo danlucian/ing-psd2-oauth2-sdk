@@ -6,7 +6,7 @@
 
     <groupId>net.danlucian.psd2.ing</groupId>
     <artifactId>oauth2-sdk</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
