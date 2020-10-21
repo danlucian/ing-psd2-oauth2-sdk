@@ -48,7 +48,9 @@ ING has 2 environments which can be used for the integration:
 - Sandbox
 
 The sandbox environment enables you to test the connectivity to ING APIs. It contains a simulator that simulates API responses.
-                        
+
+The production environment includes 2 different flows: PSD2 and OpenBaking. The difference between those two flows is that the PSD2 requires a valid eIDAS certificate when executing a request against the APIs and the OpenBanking not.                  
+
 ## Sequence diagram
 
 ![PSD2 Sequence Diagram](./docs/psd2-sequence-diagram.png)
@@ -112,7 +114,29 @@ AppAccessTokenClient appAccessTokenClient = new AppAccessTokenClient(clientSecre
 ApplicationAccessToken applicationAccessToken = appAccessTokenClient.getToken();
 ```
 
-## Get started with the production
+## Get started with the open banking flow
+1. Create a ClientSecrets instance and load your certificates:
+
+```java
+final ClientSecrets clientSecrets = new ClientSecrets(
+                clientCertificate,
+                clientKey,
+                signingCertificate,
+                signingKey);
+```
+
+2. Get an application access token:
+
+> Important! Please note that the application access token expires after 900 seconds after which you need to execute this step again in order to re-authenticate your application and request a new application access token. It is advisable to re-use the application access token instead of requesting a new token for each API call.
+
+```java
+AppAccessTokenClient appAccessTokenClient = new AppAccessTokenClient(clientSecrets);
+ApplicationAccessToken applicationAccessToken = appAccessTokenClient.getToken();
+```
+
+## Get started with the PSD2 flow
+
+Under development...
 
 ### Pre-requisite to consume PSD2 APIs in the production environment
 
