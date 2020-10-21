@@ -29,7 +29,8 @@ final public class ClientSecrets {
     private X509Certificate clientSigningCert;
     private RSAPrivateKey   clientSigningKey;
 
-    private X509Certificate trustCertificate;
+    private X509Certificate sandboxTrustCertificate;
+    private X509Certificate productionTrustCertificate;
 
     /**
      * @param clientCertificate should not be null
@@ -205,19 +206,26 @@ final public class ClientSecrets {
 
     }
 
-    private void createTrustCertificate()
-            throws IOException, CertificateException {
-        InputStream is = ClientSecrets.class.getResourceAsStream("/api.sandbox.ing.com.cer");
+    private byte[] loadCertificate(String fileName) throws IOException {
+        InputStream is = ClientSecrets.class.getResourceAsStream(fileName);
         byte[] targetArray = new byte[is.available()];
         is.read(targetArray);
         is.close();
 
-        byte[] trustCertBytes = parseDERFromPEM(
+        return parseDERFromPEM(
                 targetArray,
                 "-----BEGIN CERTIFICATE-----",
                 "-----END CERTIFICATE-----");
+    }
 
-        this.trustCertificate = generateCertificateFromDER(trustCertBytes);
+    private void createTrustCertificate()
+            throws IOException, CertificateException {
+
+        byte[] sandboxTrustCertBytes    = loadCertificate("/api.sandbox.ing.com.cer");
+        byte[] productionTrustCertBytes = loadCertificate("/api.ing.com.cer");
+
+        this.sandboxTrustCertificate = generateCertificateFromDER(sandboxTrustCertBytes);
+        this.productionTrustCertificate = generateCertificateFromDER(productionTrustCertBytes);
     }
 
     private void createSSLContext()
@@ -228,7 +236,8 @@ final public class ClientSecrets {
 
         KeyStore keyStore = KeyStore.getInstance("JKS");
         keyStore.load(null);
-        keyStore.setCertificateEntry("trust-sandbox", trustCertificate);
+        keyStore.setCertificateEntry("trust-sandbox", sandboxTrustCertificate);
+        keyStore.setCertificateEntry("trust-production", productionTrustCertificate);
         keyStore.setCertificateEntry("cert-sandbox", clientTlsCert);
         keyStore.setKeyEntry(
                 "key-sandbox",

@@ -17,6 +17,9 @@
         <bouncycastle.version>1.64</bouncycastle.version>
         <apache-commons.version>3.9</apache-commons.version>
         <gson.version>2.8.6</gson.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -85,6 +88,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>api.sandbox.ing.com.cer</include>
+                    <include>api.ing.com.cer</include>
                 </includes>
             </resource>
         </resources>
