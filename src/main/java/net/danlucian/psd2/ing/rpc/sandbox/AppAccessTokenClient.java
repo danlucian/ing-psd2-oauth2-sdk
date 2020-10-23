@@ -18,6 +18,9 @@ public class AppAccessTokenClient extends Client implements Interceptors {
 
     public final static String URL = "https://api.sandbox.ing.com/oauth2/token";
 
+    /**
+     * @param clientSecrets must not be null
+     */
     public AppAccessTokenClient(ClientSecrets clientSecrets) {
         super(clientSecrets);
     }

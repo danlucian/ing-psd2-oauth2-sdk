@@ -3,7 +3,6 @@ package net.danlucian.psd2.ing.rpc;
 import com.google.gson.Gson;
 import net.danlucian.psd2.ing.exception.rpc.RequestFailure;
 import net.danlucian.psd2.ing.exception.rpc.ResponseFailure;
-import net.danlucian.psd2.ing.rpc.payload.ApplicationAccessToken;
 import net.danlucian.psd2.ing.security.ClientSecrets;
 import net.danlucian.psd2.ing.time.DateUtil;
 import okhttp3.OkHttpClient;
@@ -26,8 +25,8 @@ public abstract class Client {
     protected final String currentDate   = DateUtil.getCurrentDateAsString();
 
     /**
-     * @param clientSecrets should not be null
-     * @param scopes should not be null
+     * @param clientSecrets must not be null
+     * @param scopes must not be null
      */
     public Client(final ClientSecrets clientSecrets, final String scopes) {
         this.clientSecrets = Objects.requireNonNull(clientSecrets, "clientSecrets must not be null");
@@ -35,7 +34,7 @@ public abstract class Client {
     }
 
     /**
-     * @param clientSecrets should not be null
+     * @param clientSecrets must not be null
      */
     public Client(final ClientSecrets clientSecrets) {
         this.clientSecrets = Objects.requireNonNull(clientSecrets, "clientSecrets must not be null");

@@ -21,13 +21,17 @@ public class CustomerAccessTokenClient extends Client implements Interceptors {
     public final static String URL = "https://api.sandbox.ing.com/oauth2/token";
     public final static String PATH = "/oauth2/token";
 
+    /**
+     * @param clientSecrets must not be null
+     * @param scopes should not be null
+     */
     public CustomerAccessTokenClient(ClientSecrets clientSecrets, String scopes) {
         super(clientSecrets, scopes);
     }
 
     /**
-     * @param applicationAccessToken should not be null
-     * @param authCode should not be null
+     * @param applicationAccessToken must not be null
+     * @param authCode must not be null
      */
     public CustomerAccessToken getToken(ApplicationAccessToken applicationAccessToken, String authCode) {
         Objects.requireNonNull(applicationAccessToken, "applicationAccessToken must not be null");
