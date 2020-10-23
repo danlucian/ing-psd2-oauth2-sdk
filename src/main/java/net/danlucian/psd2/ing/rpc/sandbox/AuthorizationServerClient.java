@@ -22,14 +22,18 @@ public class AuthorizationServerClient extends Client implements Interceptors {
     public final static String URL = "https://api.sandbox.ing.com/oauth2/authorization-server-url";
     public final static String PATH = "/oauth2/authorization-server-url";
 
+    /**
+     * @param clientSecrets must not be null
+     * @param scopes should not be null
+     */
     public AuthorizationServerClient(ClientSecrets clientSecrets, String scopes) {
         super(clientSecrets, scopes);
     }
 
     /**
-     * @param applicationAccessToken should not be null
-     * @param redirectBackUrl should not be null
-     * @param country should not be null
+     * @param applicationAccessToken must not be null
+     * @param redirectBackUrl must not be null
+     * @param country must not be null
      */
     public PreflightUrl getPreflightUrl(final ApplicationAccessToken applicationAccessToken,
                                         final URL redirectBackUrl,

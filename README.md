@@ -130,9 +130,15 @@ final ClientSecrets clientSecrets = new ClientSecrets(
 > Important! Please note that the application access token expires after 900 seconds after which you need to execute this step again in order to re-authenticate your application and request a new application access token. It is advisable to re-use the application access token instead of requesting a new token for each API call.
 
 ```java
-AppAccessTokenClient appAccessTokenClient = new AppAccessTokenClient(clientSecrets);
+AppAccessTokenClient appAccessTokenClient = new AppAccessTokenClient(clientSecrets, "009041da-cbc7-4987-b74e-e2fdfaf6a004");
 ApplicationAccessToken applicationAccessToken = appAccessTokenClient.getToken();
 ```
+
+The value for the **clientId** parameter in the above example is obtained from the [developer-portal].
+
+Select your application, and you will find the **Client ID** under the **General** section:
+![ING Developer Portal](./docs/clientid-developer-portal.png)
+
 
 ## Get started with the PSD2 flow
 

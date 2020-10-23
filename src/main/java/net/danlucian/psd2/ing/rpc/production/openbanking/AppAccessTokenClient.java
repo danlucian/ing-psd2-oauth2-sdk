@@ -17,10 +17,13 @@ import static net.danlucian.psd2.ing.security.SecurityUtil.generateSignature;
 public class AppAccessTokenClient extends Client implements Interceptors {
 
     public final static String URL = "https://api.ing.com/oauth2/token";
-    public final static String PATH = "/oauth2/token";
 
     private final String clientId;
 
+    /**
+     * @param clientSecrets must not be null
+     * @param clientId should not be null
+     */
     public AppAccessTokenClient(ClientSecrets clientSecrets, String clientId) {
         super(clientSecrets);
         this.clientId = clientId;
