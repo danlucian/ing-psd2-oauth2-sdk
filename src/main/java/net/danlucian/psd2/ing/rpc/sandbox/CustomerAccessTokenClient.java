@@ -5,6 +5,7 @@ import net.danlucian.psd2.ing.rpc.Interceptors;
 import net.danlucian.psd2.ing.rpc.payload.ApplicationAccessToken;
 import net.danlucian.psd2.ing.rpc.payload.CustomerAccessToken;
 import net.danlucian.psd2.ing.security.ClientSecrets;
+import net.danlucian.psd2.ing.time.DateUtil;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,10 +39,10 @@ public class CustomerAccessTokenClient extends Client implements Interceptors {
         Objects.requireNonNull(authCode, "authCode must not be null");
 
         final String digest = generateDigestAndConvert("grant_type=authorization_code&code=" + authCode + "&redirect_uri=");
-
+        final String currentDate = DateUtil.getCurrentDateAsString();
         final String signature = generateSignature(
                 clientSecrets.getClientSigningKey(),
-                signingTemplate("post", "/oauth2/token", digest)
+                signingTemplate("post", "/oauth2/token", currentDate, digest)
         );
         final String authorization =
                 "keyId=\"5ca1ab1e-c0ca-c01a-cafe-154deadbea75\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"" + signature + "\"";

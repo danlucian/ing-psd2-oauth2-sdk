@@ -6,6 +6,7 @@ import net.danlucian.psd2.ing.rpc.payload.ApplicationAccessToken;
 import net.danlucian.psd2.ing.rpc.payload.Country;
 import net.danlucian.psd2.ing.rpc.payload.PreflightUrl;
 import net.danlucian.psd2.ing.security.ClientSecrets;
+import net.danlucian.psd2.ing.time.DateUtil;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -43,10 +44,10 @@ public class AuthorizationServerClient extends Client implements Interceptors {
         Objects.requireNonNull(country, "country must not be null");
 
         final String digest = generateDigestAndConvert("");
-
+        final String currentDate = DateUtil.getCurrentDateAsString();
         final String signature = generateSignature(
                 clientSecrets.getClientSigningKey(),
-                signingTemplate("get", "/oauth2/authorization-server-url" + "?scope=" + scopes, digest)
+                signingTemplate("get", "/oauth2/authorization-server-url" + "?scope=" + scopes, currentDate, digest)
         );
         final String authorization =
                 "keyId=\"5ca1ab1e-c0ca-c01a-cafe-154deadbea75\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"" + signature + "\"";
