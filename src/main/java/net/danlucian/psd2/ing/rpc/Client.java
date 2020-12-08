@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import net.danlucian.psd2.ing.exception.rpc.RequestFailure;
 import net.danlucian.psd2.ing.exception.rpc.ResponseFailure;
 import net.danlucian.psd2.ing.security.ClientSecrets;
-import net.danlucian.psd2.ing.time.DateUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,8 +20,7 @@ public abstract class Client {
     protected final ClientSecrets clientSecrets;
     protected final String scopes;
 
-    protected final String digest        = generateDigestAndConvert("grant_type=client_credentials");
-    protected final String currentDate   = DateUtil.getCurrentDateAsString();
+    protected final String digest = generateDigestAndConvert("grant_type=client_credentials");
 
     /**
      * @param clientSecrets must not be null
@@ -41,21 +39,21 @@ public abstract class Client {
         this.scopes = "";
     }
 
-    protected String signingTemplate(final String httpVerb, final String uri) {
+    protected String signingTemplate(final String httpVerb, final String uri, final String currentDate) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        printWriter.println("(request-target): " + httpVerb + " " + uri);
-        printWriter.println("date: " + currentDate);
+        printWriter.print("(request-target): " + httpVerb + " " + uri + "\n");
+        printWriter.print("date: " + currentDate + "\n");
         printWriter.print("digest: " + digest);
 
         return stringWriter.toString();
     }
 
-    protected String signingTemplate(final String httpVerb, String uri, final String customDigest) {
+    protected String signingTemplate(final String httpVerb, final String uri, final String currentDate, final String customDigest) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        printWriter.println("(request-target): " + httpVerb + " " + uri);
-        printWriter.println("date: " + currentDate);
+        printWriter.print("(request-target): " + httpVerb + " " + uri + "\n");
+        printWriter.print("date: " + currentDate + "\n");
         printWriter.print("digest: " + customDigest);
 
         return stringWriter.toString();

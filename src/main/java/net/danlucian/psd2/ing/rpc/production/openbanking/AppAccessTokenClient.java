@@ -5,6 +5,7 @@ import net.danlucian.psd2.ing.rpc.Client;
 import net.danlucian.psd2.ing.rpc.Interceptors;
 import net.danlucian.psd2.ing.rpc.payload.ApplicationAccessToken;
 import net.danlucian.psd2.ing.security.ClientSecrets;
+import net.danlucian.psd2.ing.time.DateUtil;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,9 +31,10 @@ public class AppAccessTokenClient extends Client implements Interceptors {
     }
 
     public ApplicationAccessToken getToken() throws RequestFailure {
+        final String currentDate = DateUtil.getCurrentDateAsString();
         final String signature = generateSignature(
                 clientSecrets.getClientSigningKey(),
-                signingTemplate("post", "/oauth2/token")
+                signingTemplate("post", "/oauth2/token", currentDate)
         );
         final String authorization = "Signature keyId=\"" + clientId + "\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"" + signature + "\"";
 
